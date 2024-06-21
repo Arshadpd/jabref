@@ -60,13 +60,8 @@ import com.airhacks.afterburner.injection.Injector;
 import com.google.common.annotations.VisibleForTesting;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-
-
 import static org.jabref.gui.duplicationFinder.DuplicateResolverDialog.DuplicateResolverResult.BREAK;
-
 public class ImportHandler {
-
     private static final Logger LOGGER = LoggerFactory.getLogger(ImportHandler.class);
     private final BibDatabaseContext bibDatabaseContext;
     private final PreferencesService preferences;
@@ -78,9 +73,6 @@ public class ImportHandler {
     private final DialogService dialogService;
     private final TaskExecutor taskExecutor;
     private final FilePreferences filePreferences;
-
-
-
     public ImportHandler(BibDatabaseContext database,
                          PreferencesService preferences,
                          FileUpdateMonitor fileupdateMonitor,
@@ -95,7 +87,6 @@ public class ImportHandler {
         this.stateManager = stateManager;
         this.dialogService = dialogService;
         this.taskExecutor = taskExecutor;
-
         this.linker = new ExternalFilesEntryLinker(preferences.getFilePreferences(), database, dialogService);
         this.contentImporter = new ExternalFilesContentImporter(preferences.getImportFormatPreferences());
         this.undoManager = undoManager;
@@ -118,19 +109,14 @@ public class ImportHandler {
 
                 for (final Path file : files) {
                     final List<BibEntry> entriesToAdd = new ArrayList<>();
-
-
                     String relPath = relativize(file);
-
                     if (isCanceled()) {
                         break;
                     }
-
                     UiTaskExecutor.runInJavaFXThread(() -> {
                         updateMessage(Localization.lang("Processing file %0", file.getFileName()));
                         updateProgress(counter, files.size() - 1d);
                     });
-
                     try {
                         if (FileUtil.isPDFFile(file)) {
                             var pdfImporterResult = contentImporter.importPDFContent(file);
